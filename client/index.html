@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html ng-app="chipOnDuty">
+  <head>
+    <title>Chip</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="Le Kang">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="bower_components/animate.css/animate.css">
+    <link rel="stylesheet" href="app.css"/>
+  </head>
+
+  <body ng-cloak ng-controller="AppController as app">
+    <!--[if lt IE 10]>
+    <p class="browsehappy">
+      You are using an <strong>outdated</strong> browser.
+      Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
+    </p>
+    <![endif]-->
+
+    <div class="main animate-wrapper" layout="row">
+      <div ng-if="!app.activity" flex layout="column" layout-align="center center">
+        <div class="activation">
+          <h1>Chip is ready</h1>
+          <div class="activation-code" ng-if="!app.activating">
+            <input type="text" ng-model="app.activationCode" placeholder="Activation Code" maxlength="6">
+            <span><i class="material-icons">https</i></span>
+          </div>
+          <div class="keyboard" layout="column" ng-if="!app.activating">
+            <div flex layout="row" layout-align="center center">
+              <button ng-click="app.enterCode('1')">1</button>
+              <button ng-click="app.enterCode('2')">2</button>
+              <button ng-click="app.enterCode('3')">3</button>
+              <button ng-click="app.enterCode('4')">4</button>
+              <button ng-click="app.enterCode('5')">5</button>
+              <button ng-click="app.enterCode('6')">6</button>
+              <button ng-click="app.enterCode('7')">7</button>
+              <button ng-click="app.enterCode('8')">8</button>
+              <button ng-click="app.enterCode('9')">9</button>
+              <button ng-click="app.enterCode('0')">0</button>
+              <button ng-click="app.deleteCode()">
+                <i class="material-icons">keyboard_backspace</i>
+              </button>
+            </div>
+            <div flex layout="row" layout-align="center center">
+              <button ng-click="app.enterCode('Q')">Q</button>
+              <button ng-click="app.enterCode('W')">W</button>
+              <button ng-click="app.enterCode('E')">E</button>
+              <button ng-click="app.enterCode('R')">R</button>
+              <button ng-click="app.enterCode('T')">T</button>
+              <button ng-click="app.enterCode('Y')">Y</button>
+              <button ng-click="app.enterCode('U')">U</button>
+              <button ng-click="app.enterCode('I')">I</button>
+              <button ng-click="app.enterCode('O')">O</button>
+              <button ng-click="app.enterCode('P')">P</button>
+            </div>
+            <div flex layout="row" layout-align="center center">
+              <button ng-click="app.enterCode('A')">A</button>
+              <button ng-click="app.enterCode('S')">S</button>
+              <button ng-click="app.enterCode('D')">D</button>
+              <button ng-click="app.enterCode('F')">F</button>
+              <button ng-click="app.enterCode('G')">G</button>
+              <button ng-click="app.enterCode('H')">H</button>
+              <button ng-click="app.enterCode('J')">J</button>
+              <button ng-click="app.enterCode('K')">K</button>
+              <button ng-click="app.enterCode('L')">L</button>
+            </div>
+            <div flex layout="row" layout-align="center center">
+              <button ng-click="app.enterCode('Z')">Z</button>
+              <button ng-click="app.enterCode('X')">X</button>
+              <button ng-click="app.enterCode('C')">C</button>
+              <button ng-click="app.enterCode('V')">V</button>
+              <button ng-click="app.enterCode('B')">B</button>
+              <button ng-click="app.enterCode('N')">N</button>
+              <button ng-click="app.enterCode('M')">M</button>
+            </div>
+          </div>
+          <button ng-click="app.activate()" ng-if="!app.activating">Activate</button>
+          <div ng-if="app.activating" class="activating">Activating...</div>
+        </div>
+      </div>
+      <div ng-if="app.activity" class="activity" flex layout="column" layout-align="center center">
+        <div class="interaction animate-wrapper">
+          <div class="ribbon md-whiteframe-2dp">
+            <div class="ribbon-inner">
+              <img src="assets/temp/logo.png">
+            </div>
+          </div>
+          <div ng-if="app.state == 'demo'" class="images-slide animate-wrapper">
+            <div ng-if="app.currentImageIndex == 0" class="image" ng-style="{'background': 'url(assets/temp/food1.jpg) no-repeat center center / cover'}"></div>
+            <div ng-if="app.currentImageIndex == 1" class="image" ng-style="{'background': 'url(assets/temp/food2.jpg) no-repeat center center / cover'}"></div>
+            <div ng-if="app.currentImageIndex == 2" class="image" ng-style="{'background': 'url(assets/temp/food3.jpg) no-repeat center center / cover'}"></div>
+            <div ng-if="app.currentImageIndex == 3" class="image" ng-style="{'background': 'url(assets/temp/food4.jpg) no-repeat center center / cover'}"></div>
+          </div>
+          <div ng-if="app.state == 'greet'" class="conversation" layout="column">
+            <div class="top" flex layout="column" layout-align="center center">
+              <h1>
+                Hi, my name is Chip.
+                Would you like to try some
+                <span class="emphasis">{{ ::app.activity.product.name }}</span>
+                from
+                <span class="emphasis">{{ ::app.activity.shopkeeper.name }}</span> ?
+              </h1>
+            </div>
+            <div class="bottom" layout="row" layout-align="center center">
+              <button class="action green" ng-click="app.state ='present product'">Yes, please</button>
+              <button class="action red" ng-click="app.state='say goodbye'">No, thanks</button>
+            </div>
+          </div>
+          <div ng-if="app.state == 'present product'" class="conversation" layout="row" layout-align="center center">
+            <h1>
+              Wonderful! I hope you enjoy it.
+            </h1>
+          </div>
+          <div ng-if="app.state == 'ask for survey'" class="conversation" layout="column">
+            <div class="top" flex layout="column" layout-align="center center">
+              <h1>
+                Would you like to do a simple survey?
+              </h1>
+              <p>
+                You will be rewarded with a
+                <span class="emphasis">special offer</span>
+                from
+                <span class="emphasis">{{ ::app.activity.shopkeeper.name }}</span>
+                for completing the survey.
+              </p>
+            </div>
+            <div class="bottom" layout="row" layout-align="center center">
+              <button class="action green" ng-click="app.conductSurvey()">Yes, please</button>
+              <button class="action red" ng-click="app.state ='say goodbye'">No, thanks</button>
+            </div>
+          </div>
+          <div ng-if="app.state == 'conduct survey'" class="survey" layout="row">
+            <div flex layout="column" layout-align="center center">
+              <div class="survey-question animate-wrapper">
+                <div ng-repeat="surveyItem in app.activity.survey.surveyItems track by $index" ng-if="app.cureentSurveyQuestionIndex == $index" layout="column" layout-align="center">
+                  <p>{{ ::surveyItem.question }}</p>
+                  <div class="horizontal-line">
+                    <div class="line-left"></div>
+                    <div class="left-circle"></div>
+                    <div class="central-circle"></div>
+                    <div class="right-circle"></div>
+                    <div class="line-right"></div>
+                  </div>
+                  <md-radio-group ng-model="app.answer" ng-change="app.answerSurveyQuestion(surveyItem.question)">
+                    <md-radio-button ng-repeat="option in surveyItem.options" value="{{ option }}">{{ option }}</md-radio-button>
+                  </md-radio-group>
+                </div>
+              </div>
+            </div>
+            <div class="right">
+              <div class="survey-progress" flex layout="column" layout-align="center center">
+                <ul>
+                  <li ng-repeat="surveyItem in app.activity.survey.surveyItems track by $index" ng-class="{'current': app.cureentSurveyQuestionIndex == $index}">
+                    <i ng-if="app.cureentSurveyQuestionIndex > $index" class="material-icons">done</i>
+                    <span ng-if="app.cureentSurveyQuestionIndex <= $index">{{ $index + 1 }}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div ng-if="app.state == 'offer reward'" class="conversation" layout="column">
+            <div class="top" flex layout="column" layout-align="center center">
+              <h1>
+                Thank you for completing the survey.
+              </h1>
+            </div>
+            <div class="bottom-big" layout="row">
+              <div flex="60">
+                <p>
+                  Please enter your mobile phone number to get the special offer from
+                  {{ ::app.activity.shopkeeper.name }} via SMS.
+                </p>
+              </div>
+              <div flex="40" layout="row" layout-align="center start">
+                <div class="mobile-number">
+                  <div class="mobile-number-input">
+                    <input type="text" ng-model="app.mobileNumber" placeholder="Mobile No." maxlength="10" minlength="10">
+                    <span><i class="material-icons">smartphone</i></span>
+                  </div>
+                  <div class="number-pad" layout="column" layout-align="center center">
+                    <div flex layout="row" layout-align="center center">
+                      <button flex ng-click="app.enterNumber('1')">1</button>
+                      <button flex ng-click="app.enterNumber('2')">2</button>
+                      <button flex ng-click="app.enterNumber('3')">3</button>
+                    </div>
+                    <div flex layout="row" layout-align="center center">
+                      <button flex ng-click="app.enterNumber('4')">4</button>
+                      <button flex ng-click="app.enterNumber('5')">5</button>
+                      <button flex ng-click="app.enterNumber('6')">6</button>
+                    </div>
+                    <div flex layout="row" layout-align="center center">
+                      <button flex ng-click="app.enterNumber('7')">7</button>
+                      <button flex ng-click="app.enterNumber('8')">8</button>
+                      <button flex ng-click="app.enterNumber('9')">9</button>
+                    </div>
+                    <div flex layout="row" layout-align="center center">
+                      <button flex class="delete" ng-click="app.deleteNumber()">
+                        <i class="material-icons">keyboard_backspace</i>
+                      </button>
+                      <button flex ng-click="app.enterNumber('0')">0</button>
+                      <button flex class="submit" ng-disabled="!app.isValidMobileNumber()" ng-click="app.sendOffer()">
+                        <i class="material-icons">check</i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div ng-if="app.state == 'say goodbye'" class="conversation" layout="row" layout-align="center center">
+            <h1>
+              Great to meet you! <br/>
+              Enjoy the rest of your day. <br/>
+              See you next time.
+            </h1>
+          </div>
+          <md-fab-toolbar md-open="false" md-direction="left">
+            <md-fab-trigger>
+              <md-button aria-label="State Control" class="md-fab md-warn">
+                <md-icon md-font-set="material-icons">menu</md-icon>
+              </md-button>
+            </md-fab-trigger>
+            <md-toolbar>
+              <md-fab-actions class="md-toolbar-tools">
+                <md-button aria-label="Demo Product" ng-click="app.setState('demo')">
+                  Demo Product
+                </md-button>
+                <md-button aria-label="Greet" ng-click="app.setState('greet')">
+                  Greet
+                </md-button>
+                <md-button aria-label="Ask for Survey" ng-click="app.setState('ask for survey')">
+                  Ask for Survey
+                </md-button>
+              </md-fab-actions>
+            </md-toolbar>
+          </md-fab-toolbar>
+        </div>
+      </div>
+    </div>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.min.js"></script>
+    <script src="bower_components/angular-material/angular-material.min.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="bower_components/eventemitter2/lib/eventemitter2.js"></script>
+    <script src="bower_components/roslib/build/roslib.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
