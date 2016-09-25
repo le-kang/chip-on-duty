@@ -34,6 +34,20 @@ app.post('/start-activity', function(req, res) {
   });
 });
 
+app.post('/survey-result', function(req, res) {
+  request.post({
+    url: config.webServer + '/api/Activities/addSurveyResult',
+    form: {
+      id: req.body.id,
+      result: req.body.result,
+      key: config.token
+    }
+  }, function(err, httpResponse, body) {
+    if (err) return res.sendStatus(500);
+    res.status(httpResponse.statusCode).send(body);
+  })
+});
+
 app.post('/end-activity', function(req, res) {
   request.post({
     url: config.webServer + '/api/Activities/end',

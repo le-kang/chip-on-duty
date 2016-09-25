@@ -26,6 +26,7 @@
     vm.enterNumber = enterNumber;
     vm.deleteNumber = deleteNumber;
     vm.sendOffer = sendOffer;
+    vm.endActivity = endActivity;
 
     function enterCode(char) {
       if (vm.activationCode.length < 6) {
@@ -69,18 +70,22 @@
     function conductSurvey() {
       vm.state = 'conduct survey';
       vm.cureentSurveyQuestionIndex = 0;
-      vm.surveyResults = [];
+      vm.surveyResult = [];
     }
 
     function answerSurveyQuestion(question) {
       $timeout(function() {
-        vm.surveyResults.push({
+        vm.surveyResult.push({
           question: question,
           answer: vm.answer
         });
         vm.cureentSurveyQuestionIndex++;
         vm.answer = '';
         if (vm.cureentSurveyQuestionIndex == vm.activity.survey.surveyItems.length) {
+          $http.post('/survey-result', {
+            id: vm.activity.id,
+            result: vm.surveyResult
+          });
           vm.state = 'offer reward';
         }
       }, 200);
@@ -106,6 +111,16 @@
     function sendOffer() {
       vm.mobileNumber = '';
       vm.state = 'say goodbye';
+    }
+
+    function endActivity() {
+      $http
+        .post('/end-activity', { id: vm.activity.id })
+        .then(function() {
+          vm.activationCode = '';
+          vm.activity = null;
+          vm.state = null;
+        });
     }
 
     function displayImage() {
