@@ -76,7 +76,7 @@
               <button ng-click="app.enterCode('M')">M</button>
             </div>
           </div>
-          <button ng-click="app.activate()" ng-if="!app.activating">Activate</button>
+          <button ng-click="app.activate($event)" ng-if="!app.activating">Activate</button>
           <div ng-if="app.activating" class="activating">Activating...</div>
         </div>
       </div>
@@ -84,14 +84,12 @@
         <div class="interaction animate-wrapper">
           <div class="ribbon md-whiteframe-2dp">
             <div class="ribbon-inner">
-              <img src="assets/temp/logo.png">
+              <img ng-src="/image?id={{ ::app.activity.shopkeeper.id }}&name={{ ::app.activity.shopkeeper.logo }}">
             </div>
           </div>
-          <div ng-if="app.state == 'demo'" class="images-slide animate-wrapper">
-            <div ng-if="app.currentImageIndex == 0" class="image" ng-style="{'background': 'url(assets/temp/food1.jpg) no-repeat center center / cover'}"></div>
-            <div ng-if="app.currentImageIndex == 1" class="image" ng-style="{'background': 'url(assets/temp/food2.jpg) no-repeat center center / cover'}"></div>
-            <div ng-if="app.currentImageIndex == 2" class="image" ng-style="{'background': 'url(assets/temp/food3.jpg) no-repeat center center / cover'}"></div>
-            <div ng-if="app.currentImageIndex == 3" class="image" ng-style="{'background': 'url(assets/temp/food4.jpg) no-repeat center center / cover'}"></div>
+          <div ng-if="app.state == 'demo'" class="images-slide animate-wrapper">{{ }}
+            <div ng-repeat="image in app.activity.product.images track by $index" ng-if="app.currentImageIndex == $index" class="image"
+                 ng-style="{'background': 'url(/image?id=' + app.activity.product.id + '&name=' + image + ') no-repeat center center / cover'}"></div>
           </div>
           <div ng-if="app.state == 'greet'" class="conversation" layout="column">
             <div class="top" flex layout="column" layout-align="center center">
@@ -104,8 +102,8 @@
               </h1>
             </div>
             <div class="bottom" layout="row" layout-align="center center">
-              <button class="action green" ng-click="app.state ='present product'">Yes, please</button>
-              <button class="action red" ng-click="app.state='say goodbye'">No, thanks</button>
+              <button class="action green" ng-click="app.setState('present product')">Yes, please</button>
+              <button class="action red" ng-click="app.setState('say goodbye')">No, thanks</button>
             </div>
           </div>
           <div ng-if="app.state == 'present product'" class="conversation" layout="row" layout-align="center center">
@@ -128,13 +126,14 @@
             </div>
             <div class="bottom" layout="row" layout-align="center center">
               <button class="action green" ng-click="app.conductSurvey()">Yes, please</button>
-              <button class="action red" ng-click="app.state ='say goodbye'">No, thanks</button>
+              <button class="action red" ng-click="app.setState('say goodbye')">No, thanks</button>
             </div>
           </div>
           <div ng-if="app.state == 'conduct survey'" class="survey" layout="row">
             <div flex layout="column" layout-align="center center">
               <div class="survey-question animate-wrapper">
-                <div ng-repeat="surveyItem in app.activity.survey.surveyItems track by $index" ng-if="app.cureentSurveyQuestionIndex == $index" layout="column" layout-align="center">
+                <div ng-repeat="surveyItem in app.activity.survey.surveyItems track by $index" ng-if="app.cureentSurveyQuestionIndex == $index"
+                     layout="column" layout-align="center">
                   <p>{{ ::surveyItem.question }}</p>
                   <div class="horizontal-line">
                     <div class="line-left"></div>

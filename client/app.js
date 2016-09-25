@@ -6,7 +6,7 @@
     .constant('ROSLIB', ROSLIB)
     .controller('AppController', AppController);
 
-  function AppController($interval, $timeout) {
+  function AppController($interval, $timeout, $http, $mdDialog) {
     var vm = this;
     vm.activationCode = '';
     vm.activity = null;
@@ -39,37 +39,27 @@
       }
     }
 
-    function activate() {
+    function activate($event) {
       vm.activating = true;
-      // TODO: use real API
-      $timeout(function() {
-        vm.activity = {
-          shopkeeper: {
-            name: 'King\'s Cafe'
-          },
-          product: {
-            name: 'Food'
-          },
-          survey: {
-            surveyItems: [
-              {
-                question: 'How do you like our food?',
-                options: ['I like it', 'Neutral', 'Not very much']
-              },
-              {
-                question: 'Have you used our products/service before?',
-                options: ['Yes', 'No']
-              },
-              {
-                question: 'How likely is it that you would recommend us to a friend?',
-                options: ['Very likely', 'Somewhat likely', 'Neutral', 'Somewhat unlikely', 'Very unlikely']
-              }
-            ]
-          }
-        };
-        vm.state = 'demo';
-        displayImage();
-      }, 3000);
+      $http
+        .post('/start-activity', { code: vm.activationCode.toLowerCase() })
+        .then(function(response) {
+          vm.activity = response.data.activity;
+          vm.activating = false;
+          vm.state = 'demo';
+          displayImage();
+        }, function() {
+          vm.activating = false;
+          $mdDialog.show(
+            $mdDialog
+              .alert()
+              .clickOutsideToClose(false)
+              .title('Invalid activation code')
+              .textContent('Please try again')
+              .ok('Got it!')
+              .targetEvent($event)
+          );
+        });
     }
 
     function setState(state) {
