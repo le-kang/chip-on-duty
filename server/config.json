@@ -1,5 +1,5 @@
 {
-  "webServer": "http://192.168.27.1:3000",
+  "webServer": "http://chip-for-hire.lekang.me",
   "streamServerPort": 8080,
   "rosImageTopic": "/usb_cam/image_raw",
   "streamQuality": 75,
