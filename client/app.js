@@ -4,9 +4,39 @@
   angular
     .module('chipOnDuty', ['ngMaterial', 'ngResource', 'ngSanitize'])
     .constant('ROSLIB', ROSLIB)
+    .factory('ros', ros)
     .controller('AppController', AppController);
 
-  function AppController($interval, $timeout, $http, $mdDialog) {
+  function ros(ROSLIB, $rootScope) {
+    var ros;
+    return {
+      connect: function() {
+        ros = new ROSLIB.Ros({
+          url: 'ws://localhost:9090'
+        });
+      },
+      on: function(topic, messageType, callback) {
+        if (!ros) return;
+        var listener = new ROSLIB.Topic({
+          ros: ros,
+          name: topic,
+          messageType: messageType
+        });
+        listener.subscribe(function() {
+          var args = arguments;
+          $rootScope.$apply(function () {
+            callback.apply(ros, args);
+          });
+        })
+      },
+      disconnect: function() {
+        if (!ros) return;
+        ros.disconnect();
+      }
+    }
+  }
+
+  function AppController($interval, $timeout, $http, $mdDialog, ros) {
     var vm = this;
     vm.activationCode = '';
     vm.activity = null;
@@ -48,6 +78,10 @@
           vm.activity = response.data.activity;
           vm.activating = false;
           vm.state = 'demo';
+          ros.connect();
+          ros.on('/app-state', 'std_msgs/String', function(message) {
+            vm.state = message.data;
+          });
           displayImage();
         }, function() {
           vm.activating = false;
@@ -120,6 +154,7 @@
           vm.activationCode = '';
           vm.activity = null;
           vm.state = null;
+          ros.disconnect();
         });
     }
 
