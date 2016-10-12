@@ -31,7 +31,7 @@
       },
       disconnect: function() {
         if (!ros) return;
-        ros.disconnect();
+        ros.close();
       }
     }
   }
@@ -98,7 +98,11 @@
     }
 
     function setState(state) {
-      vm.state = state;
+      if (state == 'end activity') {
+        endActivity();
+      } else {
+        vm.state = state;
+      }
     }
 
     function conductSurvey() {
@@ -148,14 +152,11 @@
     }
 
     function endActivity() {
-      $http
-        .post('/end-activity', { id: vm.activity.id })
-        .then(function() {
-          vm.activationCode = '';
-          vm.activity = null;
-          vm.state = null;
-          ros.disconnect();
-        });
+      $http.post('/end-activity', { id: vm.activity.id });
+      vm.activationCode = '';
+      vm.activity = null;
+      vm.state = null;
+      ros.disconnect();
     }
 
     function displayImage() {

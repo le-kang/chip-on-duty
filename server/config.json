@@ -2,6 +2,6 @@
   "webServer": "http://chip-for-hire.lekang.me",
   "streamServerPort": 8080,
   "rosImageTopic": "/usb_cam/image_raw",
-  "streamQuality": 75,
+  "streamQuality": 5,
   "token": "magiclab"
 }

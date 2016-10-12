@@ -84,12 +84,12 @@
         <div class="interaction animate-wrapper">
           <div class="ribbon md-whiteframe-2dp">
             <div class="ribbon-inner">
-              <img ng-src="/image?id={{ ::app.activity.shopkeeper.id }}&name={{ ::app.activity.shopkeeper.logo }}">
+              <img ng-src="assets/tmp/logo/{{ ::app.activity.shopkeeper.logo }}">
             </div>
           </div>
           <div ng-if="app.state == 'demo'" class="images-slide animate-wrapper">{{ }}
             <div ng-repeat="image in app.activity.product.images track by $index" ng-if="app.currentImageIndex == $index" class="image"
-                 ng-style="{'background': 'url(/image?id=' + app.activity.product.id + '&name=' + image + ') no-repeat center center / cover'}"></div>
+                 ng-style="{'background': 'url(assets/tmp/product/' + image + ') no-repeat center center / cover'}"></div>
           </div>
           <div ng-if="app.state == 'greet'" class="conversation" layout="column">
             <div class="top" flex layout="column" layout-align="center center">
@@ -223,7 +223,7 @@
             </md-fab-trigger>
             <md-toolbar>
               <md-fab-actions class="md-toolbar-tools">
-                <md-button aria-label="End Activity" ng-click="app.endActivity()">
+                <md-button aria-label="End Activity" ng-click="app.setState('end activity')">
                   End Activity
                 </md-button>
                 <md-button aria-label="Demo Product" ng-click="app.setState('demo')">

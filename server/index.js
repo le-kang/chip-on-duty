@@ -5,8 +5,13 @@ var bodyParser = require('body-parser');
 var request = require('request');
 var events = require('events');
 var eventEmitter = new events.EventEmitter();
+var fs = require('fs');
+var async = require('async');
+var _ = require('lodash');
+var rmdir = require('rmdir');
 var config = require('./config');
 var visionStream;
+var clientPath = path.resolve('client');
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -15,7 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', function(req, res) {
-  res.sendFile(path.resolve('client/index.html'));
+  res.sendFile(clientPath + '/index.html');
 });
 
 app.post('/start-activity', function(req, res) {
@@ -27,10 +32,36 @@ app.post('/start-activity', function(req, res) {
     }
   }, function(err, httpResponse, body) {
     if (err) return res.sendStatus(500);
-    res.status(httpResponse.statusCode).send(body);
-    if (httpResponse.statusCode == 200) {
-      eventEmitter.emit('start-streaming');
-    }
+    fs.mkdirSync(clientPath + '/assets/tmp');
+    fs.mkdirSync(clientPath + '/assets/tmp/logo');
+    fs.mkdirSync(clientPath + '/assets/tmp/product');
+    var activity = JSON.parse(body).activity;
+    var assetsJobs = [];
+    assetsJobs.push(function(callback) {
+      request
+        .get(config.webServer + '/api/Containers/' + activity.shopkeeper.id + '/download/' + activity.shopkeeper.logo)
+        .pipe(fs.createWriteStream(clientPath + '/assets/tmp/logo/' + activity.shopkeeper.logo))
+        .on('finish', function() {
+          callback(null, true);
+        });
+    });
+    _.forEach(activity.product.images, function(image) {
+      assetsJobs.push(function(callback) {
+        request
+          .get(config.webServer + '/api/Containers/' + activity.product.id + '/download/' + image)
+          .pipe(fs.createWriteStream(clientPath + '/assets/tmp/product/' + image))
+          .on('finish', function() {
+            callback(null, true);
+          });
+      });
+    });
+    async.parallel(assetsJobs, function(err) {
+      if (err) return res.sendStatus(500);
+      res.status(httpResponse.statusCode).send(body);
+      if (httpResponse.statusCode == 200) {
+        eventEmitter.emit('start-streaming');
+      }
+    });
   });
 });
 
@@ -60,14 +91,9 @@ app.post('/end-activity', function(req, res) {
     res.status(httpResponse.statusCode).send(body);
     if (httpResponse.statusCode == 200) {
       eventEmitter.emit('stop-streaming');
+      rmdir(clientPath + '/assets/tmp');
     }
   });
-});
-
-app.get('/image', function(req, res) {
-  request
-    .get(config.webServer + '/api/Containers/' + req.query.id + '/download/' + req.query.name)
-    .pipe(res);
 });
 
 eventEmitter.on('start-streaming', function() {
