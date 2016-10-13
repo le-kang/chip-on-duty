@@ -84,12 +84,12 @@
         <div class="interaction animate-wrapper">
           <div class="ribbon md-whiteframe-2dp">
             <div class="ribbon-inner">
-              <img ng-src="assets/tmp/logo/{{ ::app.activity.shopkeeper.logo }}">
+              <img ng-src="assets/{{ ::app.activity.id }}/logo/{{ ::app.activity.shopkeeper.logo }}">
             </div>
           </div>
           <div ng-if="app.state == 'demo'" class="images-slide animate-wrapper">{{ }}
             <div ng-repeat="image in app.activity.product.images track by $index" ng-if="app.currentImageIndex == $index" class="image"
-                 ng-style="{'background': 'url(assets/tmp/product/' + image + ') no-repeat center center / cover'}"></div>
+                 ng-style="{'background': 'url(assets/' + app.activity.id + '/product/' + image + ') no-repeat center center / cover'}"></div>
           </div>
           <div ng-if="app.state == 'greet'" class="conversation" layout="column">
             <div class="top" flex layout="column" layout-align="center center">

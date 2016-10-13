@@ -147,6 +147,10 @@
     }
 
     function sendOffer() {
+      $http.post('/send-offer', {
+        id: vm.activity.id,
+        mobileNumber: vm.mobileNumber
+      });
       vm.mobileNumber = '';
       vm.state = 'say goodbye';
     }
