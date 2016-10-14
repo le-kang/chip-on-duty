@@ -32,15 +32,15 @@ app.post('/start-activity', function(req, res) {
     }
   }, function(err, httpResponse, body) {
     if (err) return res.sendStatus(500);
-    fs.mkdirSync(clientPath + '/assets/tmp');
-    fs.mkdirSync(clientPath + '/assets/tmp/logo');
-    fs.mkdirSync(clientPath + '/assets/tmp/product');
     var activity = JSON.parse(body).activity;
+    fs.mkdirSync(clientPath + '/assets/' + activity.id);
+    fs.mkdirSync(clientPath + '/assets/' + activity.id + '/logo');
+    fs.mkdirSync(clientPath + '/assets/' + activity.id + '/product');
     var assetsJobs = [];
     assetsJobs.push(function(callback) {
       request
         .get(config.webServer + '/api/Containers/' + activity.shopkeeper.id + '/download/' + activity.shopkeeper.logo)
-        .pipe(fs.createWriteStream(clientPath + '/assets/tmp/logo/' + activity.shopkeeper.logo))
+        .pipe(fs.createWriteStream(clientPath + '/assets/' + activity.id + '/logo/' + activity.shopkeeper.logo))
         .on('finish', function() {
           callback(null, true);
         });
@@ -49,7 +49,7 @@ app.post('/start-activity', function(req, res) {
       assetsJobs.push(function(callback) {
         request
           .get(config.webServer + '/api/Containers/' + activity.product.id + '/download/' + image)
-          .pipe(fs.createWriteStream(clientPath + '/assets/tmp/product/' + image))
+          .pipe(fs.createWriteStream(clientPath + '/assets/' + activity.id + '/product/' + image))
           .on('finish', function() {
             callback(null, true);
           });
@@ -79,6 +79,20 @@ app.post('/survey-result', function(req, res) {
   })
 });
 
+app.post('/send-offer', function(req, res) {
+  request.post({
+    url: config.webServer + '/api/Activities/sendOffer',
+    form: {
+      id: req.body.id,
+      mobileNumber: req.body.mobileNumber,
+      key: config.token
+    }
+  }, function(err, httpResponse, body) {
+    if (err) return res.sendStatus(500);
+    res.status(httpResponse.statusCode).send(body);
+  })
+});
+
 app.post('/end-activity', function(req, res) {
   request.post({
     url: config.webServer + '/api/Activities/end',
@@ -91,7 +105,7 @@ app.post('/end-activity', function(req, res) {
     res.status(httpResponse.statusCode).send(body);
     if (httpResponse.statusCode == 200) {
       eventEmitter.emit('stop-streaming');
-      rmdir(clientPath + '/assets/tmp');
+      rmdir(clientPath + '/assets/' + req.body.id);
     }
   });
 });
