@@ -80,7 +80,7 @@
           vm.state = 'demo';
           ros.connect();
           ros.on('/app-state', 'std_msgs/String', function(message) {
-            vm.state = message.data;
+            setState(message.data);
           });
           displayImage();
         }, function() {
