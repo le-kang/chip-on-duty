@@ -15,7 +15,7 @@
           url: 'ws://localhost:9090'
         });
       },
-      on: function(topic, messageType, callback) {
+      subscribe: function(topic, messageType, callback) {
         if (!ros) return;
         var listener = new ROSLIB.Topic({
           ros: ros,
@@ -28,6 +28,15 @@
             callback.apply(ros, args);
           });
         })
+      },
+      publish: function(topic, messageType, message) {
+        var publisher = new ROSLIB.Topic({
+          ros: ros,
+          name: topic,
+          messageType: messageType
+        });
+        var data = new ROSLIB.Message(message);
+        publisher.publish(data);
       },
       disconnect: function() {
         if (!ros) return;
@@ -77,10 +86,12 @@
         .then(function(response) {
           vm.activity = response.data.activity;
           vm.activating = false;
-          vm.state = 'demo';
+          setState('demo');
           ros.connect();
-          ros.on('/app-state', 'std_msgs/String', function(message) {
-            setState(message.data);
+          ros.subscribe('/pyride/node_status', 'pyride_common_msgs/NodeStatus', function(data) {
+            if (data['node_id'] == 'chip_on_duty') {
+              setState(data['status_text']);
+            }
           });
           displayImage();
         }, function() {
@@ -102,13 +113,29 @@
         endActivity();
       } else {
         vm.state = state;
+        if (state == 'greet') {
+          sendSpeech('Hi, my name is Chip. Would you like to try some ' + vm.activity.product.name + ' from ' + vm.activity.shopkeeper.name + '?');
+        }
+        if (state == 'present product') {
+          sendSpeech('Wonderful! I hope you enjoy it.');
+        }
+        if (state == 'ask for survey') {
+          sendSpeech('Would you like to do a simple survey? You will be rewarded with a special offer from ' + vm.activity.shopkeeper.name + '.');
+        }
+        if (state == 'offer reward') {
+          sendSpeech('Thank you for completing the survey. Please enter your mobile phone number to get the special offer.');
+        }
+        if (state == 'say goodbye') {
+          sendSpeech('Great to meet you! Enjoy the rest of your day. See you next time.');
+        }
       }
     }
 
     function conductSurvey() {
-      vm.state = 'conduct survey';
+      setState('conduct survey');
       vm.cureentSurveyQuestionIndex = 0;
       vm.surveyResult = [];
+      sendSpeech(vm.activity.survey.surveyItems[vm.cureentSurveyQuestionIndex].question);
     }
 
     function answerSurveyQuestion(question) {
@@ -124,9 +151,11 @@
             id: vm.activity.id,
             result: vm.surveyResult
           });
-          vm.state = 'offer reward';
+          setState('offer reward');
+        } else {
+          sendSpeech(vm.activity.survey.surveyItems[vm.cureentSurveyQuestionIndex].question);
         }
-      }, 200);
+      }, 300);
     }
 
     function isValidMobileNumber() {
@@ -152,7 +181,7 @@
         mobileNumber: vm.mobileNumber
       });
       vm.mobileNumber = '';
-      vm.state = 'say goodbye';
+      setState('say goodbye');
     }
 
     function endActivity() {
@@ -171,6 +200,13 @@
           vm.currentImageIndex = 0;
         }
       }, 3000)
+    }
+
+    function sendSpeech(text) {
+      ros.publish('/pyride/node_status', 'pyride_common_msgs/NodeStatus', {
+        'node_id': 'chip_on_duty_speech',
+        'status_text': text
+      });
     }
   }
 
