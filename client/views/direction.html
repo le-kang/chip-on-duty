@@ -1,0 +1,18 @@
+<div flex layout="column" layout-align="center center">
+  <div class="direction" layout="column">
+    <a ng-if="app.currentDestination" ng-click="app.goBack()" class="back">Back</a>
+    <h1 ng-if="!app.currentDestination">Please select a destination</h1>
+    <div ng-if="!app.currentDestination" flex class="destinations" layout="row" layout-align="center center" layout-padding layout-margin>
+      <div flex ng-repeat="destination in app.destinations track by $index">
+        <button ng-click="app.selectDestination($index)">
+          <img ng-src="assets/images/{{ ::destination.logo }}" width="100%">
+        </button>
+
+      </div>
+    </div>
+    <div  ng-if="app.currentDestination" layout="row" layout-align="center center">
+      <img ng-src="assets/images/{{ ::app.currentDestination.logo }}" height="120">
+    </div>
+    <p ng-if="app.currentDestination" typewriter value="{{ ::app.currentDestination.speech }}" speed="50"></p>
+  </div>
+</div>

@@ -2,39 +2,85 @@
   'use strict';
 
   angular
-    .module('chipOnDuty', ['ngMaterial', 'ngResource', 'ngSanitize'])
+    .module('chipOnDuty', ['ngMaterial', 'ngResource', 'ngSanitize', 'ui.router'])
     .constant('ROSLIB', ROSLIB)
+    .constant('malarkey', malarkey)
+    .config(routerConfig)
     .factory('ros', ros)
-    .controller('AppController', AppController);
+    .directive('typewriter', typewriter)
+    .run(init)
+    .controller('NavigationController', NavigationController)
+    .controller('ActivityController', ActivityController);
+
+  function routerConfig($stateProvider, $urlRouterProvider) {
+    $stateProvider
+      .state('home', {
+        url: '/',
+        templateUrl: "views/home.html"
+      })
+      .state('direction', {
+        url: '/direction',
+        templateUrl: 'views/direction.html',
+        controller: 'NavigationController',
+        controllerAs: 'app'
+      })
+      .state('activity', {
+        url: '/activity',
+        templateUrl: 'views/activity.html',
+        controller: 'ActivityController',
+        controllerAs: 'app'
+      });
+
+    $urlRouterProvider.otherwise('/');
+  }
 
   function ros(ROSLIB, $rootScope) {
-    var ros;
+    var ros = null;
+    var listener = null;
+    var publisher = null;
+    var listeners = {};
     return {
-      connect: function() {
+      connect: function(address) {
         ros = new ROSLIB.Ros({
-          url: 'ws://localhost:9090'
+          url: address
+        });
+        ros.on('connection', function() {
+          listener = new ROSLIB.Topic({
+            ros: ros,
+            name: '/pyride/node_message',
+            messageType: 'pyride_common_msgs/NodeMessage'
+          });
+          listener.subscribe(function(data) {
+            for (var node in listeners) {
+              if (listeners.hasOwnProperty(node) && typeof listeners[node] == 'function' && data.node_id == node) {
+                $rootScope.$apply(function() {
+                  listeners[node](data.command);
+                });
+              }
+            }
+          });
+          publisher = new ROSLIB.Topic({
+            ros: ros,
+            name: '/pyride/node_status',
+            messageType: 'pyride_common_msgs/NodeStatus'
+          });
+        });
+        ros.on('close', function() {
+          ros = null;
+          listener = null;
+          publisher = null;
+          listeners = {};
         });
       },
-      subscribe: function(topic, messageType, callback) {
-        if (!ros) return;
-        var listener = new ROSLIB.Topic({
-          ros: ros,
-          name: topic,
-          messageType: messageType
-        });
-        listener.subscribe(function() {
-          var args = arguments;
-          $rootScope.$apply(function () {
-            callback.apply(ros, args);
-          });
-        })
+      subscribe: function(node, callback) {
+        if (!ros || listeners[node]) return;
+        listeners[node] = callback;
+      },
+      unsubscribe: function(topic) {
+        if (!ros || listeners[topic]) return;
+        delete listeners[topic];
       },
       publish: function(topic, messageType, message) {
-        var publisher = new ROSLIB.Topic({
-          ros: ros,
-          name: topic,
-          messageType: messageType
-        });
         var data = new ROSLIB.Message(message);
         publisher.publish(data);
       },
@@ -45,7 +91,38 @@
     }
   }
 
-  function AppController($interval, $timeout, $http, $mdDialog, ros) {
+  function typewriter(malarkey) {
+    var directive = {
+      restrict: 'A',
+      scope: {
+        value: '@',
+        speed: '='
+      },
+      link: link
+    };
+
+    return directive;
+
+    function link(scope, el) {
+      el.addClass('typewriter');
+      var typewriter = malarkey(el[0], {typeSpeed: scope.speed});
+      typewriter.type(scope.value);
+    }
+  }
+
+  function init($http, ros) {
+    console.log('init');
+    $http
+      .get('/ros-websocket')
+      .then(function(response) {
+        ros.connect(response.data.rosbridgeURI);
+        ros.subscribe('chip_on_duty_state', function(command) {
+          $state.go(command.state);
+        });
+      });
+  }
+
+  function ActivityController($interval, $timeout, $http, $mdDialog, ros, $state) {
     var vm = this;
     vm.activationCode = '';
     vm.activity = null;
@@ -87,11 +164,8 @@
           vm.activity = response.data.activity;
           vm.activating = false;
           setState('demo');
-          ros.connect();
-          ros.subscribe('/pyride/node_status', 'pyride_common_msgs/NodeStatus', function(data) {
-            if (data['node_id'] == 'chip_on_duty') {
-              setState(data['status_text']);
-            }
+          ros.subscribe('activity_status', function(command) {
+            setState(command.status);
           });
           displayImage();
         }, function() {
@@ -189,7 +263,8 @@
       vm.activationCode = '';
       vm.activity = null;
       vm.state = null;
-      ros.disconnect();
+      ros.unsubscribe('/pyride/node_status');
+
     }
 
     function displayImage() {
@@ -203,7 +278,47 @@
     }
 
     function sendSpeech(text) {
-      ros.publish('/pyride/node_status', 'pyride_common_msgs/NodeStatus', {
+      ros.publish({
+        'node_id': 'chip_on_duty_speech',
+        'status_text': text
+      });
+    }
+  }
+
+  function NavigationController(ros) {
+    var vm = this;
+    vm.currentDestination = null;
+    vm.destinations = [
+      {
+        name: 'Woolworths',
+        logo: 'woolworths.png',
+        speech: 'Woolworths is on this floor and only about 50m away. Move down the main corridor to my left. It is on the other side. I understand that the avocados are excellent right now.'
+      },
+      {
+        name: 'JB Hi-Fi',
+        logo: 'JB-Hi-Fi.png',
+        speech: 'JB Hi-Fi is on the 1st floor. Go up the escalator behind me. At the top turn to the left and it is immediately in front of you. Game of Thrones Season 6 DVD is on sale for 41.95 dollars. Personally I don\'t understand the plot but I like Tyrion.'
+      },
+      {
+        name: 'Kmart',
+        logo: 'kmart.png',
+        speech: 'Kmart is our largest shop by floor space. It is all the way at the end of the centre down the main corridor to my right. You will have to go about 100m so why not stop for refreshments at Gloria Jean’s Coffees.'
+      }
+    ];
+    vm.selectDestination = selectDestination;
+    vm.goBack = goBack;
+
+    function selectDestination(index) {
+      vm.currentDestination = vm.destinations[index];
+      sendSpeech(vm.currentDestination.speech);
+    }
+
+    function goBack() {
+      vm.currentDestination = null;
+    }
+
+    function sendSpeech(text) {
+      ros.publish({
         'node_id': 'chip_on_duty_speech',
         'status_text': text
       });

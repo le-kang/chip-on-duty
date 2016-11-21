@@ -23,6 +23,8 @@
     "angular-resource": "^1.5.8",
     "angular-sanitize": "^1.5.8",
     "animate.css": "^3.5.2",
-    "roslib": "^0.18.0"
+    "roslib": "^0.18.0",
+    "malarkey": "yuanqing/malarkey#^1.3.3",
+    "angular-ui-router": "^0.3.2"
   }
 }

@@ -23,6 +23,10 @@ app.get('/', function(req, res) {
   res.sendFile(clientPath + '/index.html');
 });
 
+app.get('/ros-websocket', function(req, res) {
+  res.send({ rosbridgeURI: config.rosbridgeURI });
+});
+
 app.post('/start-activity', function(req, res) {
   request.post({
     url: config.webServer + '/api/Activities/start',

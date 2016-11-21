@@ -10,6 +10,7 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+  background: url('assets/images/background.png') repeat 0 0;
 }
 
 * {
@@ -20,7 +21,6 @@ body {
   z-index: 0;
   width: 100%;
   height: 100%;
-  background: url('assets/images/background.png') repeat 0 0;
 }
 
 button:focus {
@@ -43,6 +43,104 @@ button:focus {
 
 .main > div.ng-enter {
   animation: zoomIn 1s;
+}
+
+.logo {
+  background-color: #ffffff;
+}
+
+.direction {
+  background: #FFFFFF;
+  border: 10px solid #ffffff;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+  width: 970px;
+  height: 690px;
+  margin: 30px auto;
+  padding: 30px;
+  overflow: visible;
+  position: relative;
+}
+
+.direction:before, .direction:after{
+  z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 20px;
+  left: 10px;
+  width: 50%;
+  top: 80%;
+  max-width: 350px;
+  background: #777;
+  box-shadow: 0 35px 20px #777;
+  -webkit-transform: rotate(-8deg);
+  -moz-transform: rotate(-8deg);
+  -o-transform: rotate(-8deg);
+  -ms-transform: rotate(-8deg);
+  transform: rotate(-8deg);
+}
+
+.direction:after{
+  -webkit-transform: rotate(8deg);
+  -moz-transform: rotate(8deg);
+  -o-transform: rotate(8deg);
+  -ms-transform: rotate(8deg);
+  transform: rotate(8deg);
+  right: 10px;
+  left: auto;
+}
+
+.direction h1 {
+  padding: 0;
+  font-family: 'Lato', sans-serif;
+  font-size: 54px;
+  line-height: 80px;
+  font-weight: 700;
+  text-shadow: 0 4px 3px rgba(0,0,0,0.4),
+  0 8px 13px rgba(0,0,0,0.1),
+  0 18px 23px rgba(0,0,0,0.1);
+}
+
+.direction p {
+  padding: 20px 0;
+  font-family: 'Lato', sans-serif;
+  font-size: 30px;
+  line-height: 50px;
+  font-weight: 500;
+  text-shadow: 0 4px 3px rgba(0,0,0,0.4),
+  0 8px 13px rgba(0,0,0,0.1),
+  0 18px 23px rgba(0,0,0,0.1);
+}
+
+.direction button {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+}
+
+.direction .back {
+  text-align: center;
+  cursor: pointer;
+  width: 200px;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  height: 80px;
+  padding: 20px 40px;
+  border-radius: 5px;
+  font-size: 32px;
+  -webkit-transition: all 100ms linear;
+  transition: all 100ms linear;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 10px 50px;
+  text-shadow: 0 4px 3px rgba(0,0,0,0.4),
+  0 8px 13px rgba(0,0,0,0.1),
+  0 18px 23px rgba(0,0,0,0.1);
+  color: #ffffff;
+  background: -webkit-linear-gradient(top, #a8e427 0%, #baea54 100%);
+  background: linear-gradient(to bottom, #a8e427 0%, #baea54 100%);
+  border: 1px solid #9bd71a;
+  box-shadow: 0 4px 0 0 #9bd71a, 0 5px 12px 0 rgba(0, 0, 0, 0.6), inset 0 0 10px -5px #000000;
 }
 
 .activation {
