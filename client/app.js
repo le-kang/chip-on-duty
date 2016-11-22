@@ -80,7 +80,7 @@
         if (!ros || listeners[topic]) return;
         delete listeners[topic];
       },
-      publish: function(topic, messageType, message) {
+      publish: function(message) {
         var data = new ROSLIB.Message(message);
         publisher.publish(data);
       },
