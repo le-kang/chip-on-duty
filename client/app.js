@@ -187,22 +187,22 @@
       } else {
         vm.state = state;
         if (state == 'greet') {
-          sendSpeech('Hi, my name is Chip. Would you like to try some ' + vm.activity.product.name + ' from ' + vm.activity.shopkeeper.name + '?');
+          sendSpeech(',Hi, my name is Chip. Would you like to try some ' + vm.activity.product.name + ' from ' + vm.activity.shopkeeper.name + '?');
         }
         if (state == 'present product') {
-          sendSpeech('Wonderful! I hope you enjoy it.');
+          sendSpeech(',Wonderful! I hope you enjoy it.');
           $timeout(function() {
             setState('ask for survey');
           }, 4000);
         }
         if (state == 'ask for survey') {
-          sendSpeech('Would you like to do a simple survey? You will be rewarded with a special offer from ' + vm.activity.shopkeeper.name + '.');
+          sendSpeech(',Would you like to do a simple survey? You will be rewarded with a special offer from ' + vm.activity.shopkeeper.name + '.');
         }
         if (state == 'offer reward') {
-          sendSpeech('Thank you for completing the survey. Please enter your mobile phone number to get the special offer.');
+          sendSpeech(',Thank you for completing the survey. Please enter your mobile phone number to get the special offer.');
         }
         if (state == 'say goodbye') {
-          sendSpeech('Great to meet you! Enjoy the rest of your day. See you next time.');
+          sendSpeech(',Great to meet you! Enjoy the rest of your day. See you next time.');
           $timeout(function() {
             setState('demo');
           }, 4000);
@@ -314,7 +314,7 @@
 
     function selectDestination(index) {
       vm.currentDestination = vm.destinations[index];
-      sendSpeech(vm.currentDestination.speech);
+      sendSpeech(',' + vm.currentDestination.speech);
     }
 
     function goBack() {
