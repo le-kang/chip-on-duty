@@ -54,7 +54,7 @@
             for (var node in listeners) {
               if (listeners.hasOwnProperty(node) && typeof listeners[node] == 'function' && data.node_id == node) {
                 $rootScope.$apply(function() {
-                  listeners[node](data.command);
+                  listeners[node](JSON.parse(data.command));
                 });
               }
             }
@@ -110,8 +110,7 @@
     }
   }
 
-  function init($http, ros) {
-    console.log('init');
+  function init($http, ros, $state) {
     $http
       .get('/ros-websocket')
       .then(function(response) {
@@ -269,8 +268,7 @@
       vm.activationCode = '';
       vm.activity = null;
       vm.state = null;
-      ros.unsubscribe('/pyride/node_status');
-
+      ros.unsubscribe('activity_status');
     }
 
     function displayImage() {

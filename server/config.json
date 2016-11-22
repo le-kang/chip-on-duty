@@ -1,5 +1,5 @@
 {
-  "rosbridgeURI": "ws://localhost:9090",
+  "rosbridgeURI": "ws://10.68.1.240:9090",
   "webServer": "http://chip-for-hire.lekang.me",
   "streamServerPort": 8080,
   "rosImageTopic": "/stereo/right/image",
