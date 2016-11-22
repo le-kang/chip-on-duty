@@ -232,7 +232,7 @@
           });
           setState('offer reward');
         } else {
-          sendSpeech(vm.activity.survey.surveyItems[vm.cureentSurveyQuestionIndex].question);
+          sendSpeech(',' + vm.activity.survey.surveyItems[vm.cureentSurveyQuestionIndex].question);
         }
       }, 300);
     }
