@@ -122,7 +122,7 @@
       });
   }
 
-  function ActivityController($interval, $timeout, $http, $mdDialog, ros, $state) {
+  function ActivityController($interval, $timeout, $http, $mdDialog, ros) {
     var vm = this;
     vm.activationCode = '';
     vm.activity = null;
@@ -192,6 +192,9 @@
         }
         if (state == 'present product') {
           sendSpeech('Wonderful! I hope you enjoy it.');
+          $timeout(function() {
+            setState('ask for survey');
+          }, 4000);
         }
         if (state == 'ask for survey') {
           sendSpeech('Would you like to do a simple survey? You will be rewarded with a special offer from ' + vm.activity.shopkeeper.name + '.');
@@ -201,6 +204,9 @@
         }
         if (state == 'say goodbye') {
           sendSpeech('Great to meet you! Enjoy the rest of your day. See you next time.');
+          $timeout(function() {
+            setState('demo');
+          }, 4000);
         }
       }
     }
