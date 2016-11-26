@@ -279,6 +279,7 @@
       vm.activationCode = '';
       vm.activity = null;
       vm.state = null;
+      ros.sendSpeech(',That completes the product sample survey. I’m collating results and sending a link to the shop owner. You can see the results on the screen.');
       ros.unsubscribe('activity_status');
     }
 
