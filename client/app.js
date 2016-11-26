@@ -80,13 +80,21 @@
         if (!ros || listeners[topic]) return;
         delete listeners[topic];
       },
-      publish: function(message) {
-        var data = new ROSLIB.Message(message);
-        publisher.publish(data);
+      sendSpeech: function(speech) {
+        var message = new ROSLIB.Message({
+          'node_id': 'chip_on_duty_speech',
+          'status_text': speech
+        });
+        console.log(message);
+        publisher.publish(message);
       },
-      disconnect: function() {
-        if (!ros) return;
-        ros.close();
+      sendMotion: function(motion) {
+        var message = new ROSLIB.Message({
+          'node_id': 'chip_on_duty_motion',
+          'status_text': motion
+        });
+        console.log(message);
+        publisher.publish(message);
       }
     }
   }
@@ -187,25 +195,28 @@
       } else {
         vm.state = state;
         if (state == 'greet') {
-          sendSpeech(',Hi, my name is Chip. Would you like to try some ' + vm.activity.product.name + ' from ' + vm.activity.shopkeeper.name + '?');
+          ros.sendSpeech(',Hi, my name is Chip. Would you like to try some ' + vm.activity.product.name + ' from ' + vm.activity.shopkeeper.name + '?');
+          ros.sendMotion('point_to_left');
         }
         if (state == 'present product') {
-          sendSpeech(',Wonderful! I hope you enjoy it.');
+          ros.sendSpeech(',Wonderful! I hope you enjoy it.');
           $timeout(function() {
             setState('ask for survey');
-          }, 4000);
+          }, 5000);
         }
         if (state == 'ask for survey') {
-          sendSpeech(',Would you like to do a simple survey? You will be rewarded with a special offer from ' + vm.activity.shopkeeper.name + '.');
+          ros.sendSpeech(',Would you like to do a simple survey?');
+          ros.sendMotion('show_touchscreen');
         }
         if (state == 'offer reward') {
-          sendSpeech(',Thank you for completing the survey. Please enter your mobile phone number to get the special offer.');
+          ros.sendSpeech(',Thank you for completing the survey. Please enter your mobile phone number to get the special offer.');
         }
         if (state == 'say goodbye') {
-          sendSpeech(',Great to meet you! Enjoy the rest of your day. See you next time.');
+          ros.sendSpeech(',Thank you, It is great to meet you! Enjoy the rest of your day. See you next time.');
+          ros.sendMotion('bow');
           $timeout(function() {
             setState('demo');
-          }, 4000);
+          }, 7000);
         }
       }
     }
@@ -214,7 +225,7 @@
       setState('conduct survey');
       vm.cureentSurveyQuestionIndex = 0;
       vm.surveyResult = [];
-      sendSpeech(vm.activity.survey.surveyItems[vm.cureentSurveyQuestionIndex].question);
+      ros.sendSpeech(',' + vm.activity.survey.surveyItems[vm.cureentSurveyQuestionIndex].question);
     }
 
     function answerSurveyQuestion(question) {
@@ -230,9 +241,9 @@
             id: vm.activity.id,
             result: vm.surveyResult
           });
-          setState('offer reward');
+          setState('say goodbye');
         } else {
-          sendSpeech(',' + vm.activity.survey.surveyItems[vm.cureentSurveyQuestionIndex].question);
+          ros.sendSpeech(',' + vm.activity.survey.surveyItems[vm.cureentSurveyQuestionIndex].question);
         }
       }, 300);
     }
@@ -280,13 +291,6 @@
         }
       }, 3000)
     }
-
-    function sendSpeech(text) {
-      ros.publish({
-        'node_id': 'chip_on_duty_speech',
-        'status_text': text
-      });
-    }
   }
 
   function NavigationController(ros) {
@@ -294,19 +298,60 @@
     vm.currentDestination = null;
     vm.destinations = [
       {
-        name: 'Woolworths',
-        logo: 'woolworths.png',
-        speech: 'Woolworths is on this floor and only about 50m away. Move down the main corridor to my left. It is on the other side. I understand that the avocados are excellent right now.'
+        name: 'Customer Care',
+        logo: 'customer_care.png',
+        description: 'Our customer care desk is located to the right, next to the travelator. You can do loads of things at our customer care desk!  Grab a gift card for that special someone or pick up a copy of our Christmas Gift Guide for some inspiration. Do you need a hand around the centre? You can hire mobility equipment there as well.',
+        speech: 'Our customer care desk is located to the right, next to the travelator. You can do loads of things at our customer care desk!  Grab a gift card for that special someone, or pick up a copy of our Christmas Gift Guide for some inspiration. Do you need a hand around the centre? You can hire mobility equipment there as well.',
+        motionDelay: 0,
+        motion: 'point_to_right'
+      },
+      {
+        name: 'Big W',
+        logo: 'bigw.png',
+        description: 'Big W is located on the level above. Take the travelator next to our customer care desk, walk towards The Coffee Club and Big W is there on your left. Have you had a photo with Santa? He’s located outside Big W, why not do it while you are there. Have you put up your Christmas Tree? Big W has a huge range of Christmas trees, decorations and lights.',
+        speech: 'Big W is located on the level above. Take the travelator next to our customer care desk, walk towards The Coffee Club, and Big W is there on your left. Have you had a photo with Santa? He’s located outside Big W, why not do it while you are there. Have you put up your Christmas Tree? Big W has a huge range of Christmas trees, decorations and lights.',
+        motionDelay: 0,
+        motion: 'point_to_top_left'
+      },
+      {
+        name: 'Sportsgirl',
+        logo: 'sportsgirl.png',
+        description: 'Sportsgirl is located on the level above. Head up the travelator and walk to your right. They are in between Napoleon Perdis and Bardot. Sportsgirl is a brand new retailer at Merrylands. This is their first day of trade! Pay them a visit and show them some love.',
+        speech: 'Sports girl is located on the level above. Head up the travelator and walk to your right. They are in between Napoleon Perdis and Bardot. Sportsgirl is a brand new retailer at Merrylands. This is their first day of trade! Pay them a visit, and show them some love.',
+        motionDelay: 0,
+        motion: 'point_to_top_right'
+      },
+      {
+        name: 'Priceline',
+        logo: 'priceline.png',
+        description: 'It’s a bit of a walk but it’s worth it. Priceline is on this level, keep walking straight down this corridor and it’s on the left. If you get to Kmart you have gone too far. They have so many Christmas hampers, already packed – all you need to do is wrap them. Up to 60% off this Wednesday and Thursday on Fragrance.',
+        speech: 'It’s a bit of a walk but it’s worth it. Priceline is on this level, keep walking straight down this corridor, and it’s on the left. If you get to Kmart, you have gone too far. They have so many Christmas hampers, already packed, all you need to do is wrap them. Up to 60% off this Wednesday and Thursday on Fragrance.',
+        motionDelay: 0,
+        motion: 'point_to_right'
+      },
+      {
+        name: 'Priceline',
+        logo: 'priceline.png',
+        description: 'It’s a bit of a walk but it’s worth it. Priceline is on this level, keep walking straight down this corridor and it’s on the left. If you get to Kmart you have gone too far. They have so many Christmas hampers, already packed – all you need to do is wrap them. Up to 60% off this Wednesday and Thursday on Fragrance.',
+        speech: 'It’s a bit of a walk but it’s worth it. Priceline is on this level, keep walking straight down this corridor, and it’s on the left. If you get to Kmart, you have gone too far. They have so many Christmas hampers, already packed, all you need to do is wrap them. Up to 60% off this Wednesday and Thursday on Fragrance.',
+        motionDelay: 0,
+        motion: 'point_to_right'
+      },
+      {
+        name: 'Food Court',
+        logo: 'food_court.png',
+        description: 'Our food court is located on the level above. Take the travelators near Customer Care, turn right and walk straight. The food court will be on your right – you can’t miss it. Treat yourself! Head to Krema Bar for a coffee and muffin deal, you deserve it.',
+        speech: 'Our food court is located on the level above. Take the travelators near Customer Care, turn right and walk straight. The food court will be on your right,you can’t miss it. Treat yourself! Head to Krema Bar for a coffee and muffin deal, you deserve it.',
+        motionDelay: 0,
+        motion: 'point_to_top_right'
       },
       {
         name: 'JB Hi-Fi',
         logo: 'JB-Hi-Fi.png',
-        speech: 'JB Hi-Fi is on the 1st floor. Go up the escalator behind me. At the top turn to the left and it is immediately in front of you. Game of Thrones Season 6 DVD is on sale for 41.95 dollars. Personally I don\'t understand the plot but I like Tyrion.'
-      },
-      {
-        name: 'Kmart',
-        logo: 'kmart.png',
-        speech: 'Kmart is our largest shop by floor space. It is all the way at the end of the centre down the main corridor to my right. You will have to go about 100m so why not stop for refreshments at Gloria Jean’s Coffees.'
+        description: 'JB Hi-Fi is located on the floor above us. Head up the travelators near Customer Care, you will see the shopfront straight ahead. Do you know someone who likes their music loud? They have a huge range of Bluetooth speakers for Christmas. Or maybe you want to give them some headphones?',
+        speech: 'JB Hi-Fi is located on the floor above us. Head up the travelators near Customer Care, you will see the shopfront straight ahead. Do you know someone who likes their music loud? They have a huge range of Bluetooth speakers for Christmas. Or maybe you want to give them some headphones?',
+        motionDelay: 0,
+        motion: 'point_to_top_left'
       }
     ];
     vm.selectDestination = selectDestination;
@@ -314,18 +359,14 @@
 
     function selectDestination(index) {
       vm.currentDestination = vm.destinations[index];
-      sendSpeech(',' + vm.currentDestination.speech);
+      ros.sendSpeech(',' + vm.currentDestination.speech);
+      $timeout(function () {
+        ros.sendMotion(vm.currentDestination.motion);
+      }, vm.currentDestination.motionDelay);
     }
 
     function goBack() {
       vm.currentDestination = null;
-    }
-
-    function sendSpeech(text) {
-      ros.publish({
-        'node_id': 'chip_on_duty_speech',
-        'status_text': text
-      });
     }
   }
 

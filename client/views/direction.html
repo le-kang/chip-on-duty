@@ -13,6 +13,6 @@
     <div  ng-if="app.currentDestination" layout="row" layout-align="center center">
       <img ng-src="assets/images/{{ ::app.currentDestination.logo }}" height="120">
     </div>
-    <p ng-if="app.currentDestination" typewriter value="{{ ::app.currentDestination.speech }}" speed="70"></p>
+    <p ng-if="app.currentDestination" typewriter value="{{ ::app.currentDestination.description }}" speed="70"></p>
   </div>
 </div>
