@@ -331,14 +331,6 @@
         motion: 'point_to_right'
       },
       {
-        name: 'Priceline',
-        logo: 'priceline.png',
-        description: 'It’s a bit of a walk but it’s worth it. Priceline is on this level, keep walking straight down this corridor and it’s on the left. If you get to Kmart you have gone too far. They have so many Christmas hampers, already packed – all you need to do is wrap them. Up to 60% off this Wednesday and Thursday on Fragrance.',
-        speech: 'It’s a bit of a walk but it’s worth it. Priceline is on this level, keep walking straight down this corridor, and it’s on the left. If you get to Kmart, you have gone too far. They have so many Christmas hampers, already packed, all you need to do is wrap them. Up to 60% off this Wednesday and Thursday on Fragrance.',
-        motionDelay: 0,
-        motion: 'point_to_right'
-      },
-      {
         name: 'Food Court',
         logo: 'food_court.png',
         description: 'Our food court is located on the level above. Take the travelators near Customer Care, turn right and walk straight. The food court will be on your right – you can’t miss it. Treat yourself! Head to Krema Bar for a coffee and muffin deal, you deserve it.',
@@ -348,7 +340,7 @@
       },
       {
         name: 'JB Hi-Fi',
-        logo: 'JB-Hi-Fi.png',
+        logo: 'jb-hi-fi.png',
         description: 'JB Hi-Fi is located on the floor above us. Head up the travelators near Customer Care, you will see the shopfront straight ahead. Do you know someone who likes their music loud? They have a huge range of Bluetooth speakers for Christmas. Or maybe you want to give them some headphones?',
         speech: 'JB Hi-Fi is located on the floor above us. Head up the travelators near Customer Care, you will see the shopfront straight ahead. Do you know someone who likes their music loud? They have a huge range of Bluetooth speakers for Christmas. Or maybe you want to give them some headphones?',
         motionDelay: 0,

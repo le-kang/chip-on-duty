@@ -50,7 +50,6 @@ button:focus {
 }
 
 .direction {
-  background: #FFFFFF;
   border: 10px solid #ffffff;
   box-shadow: 1px 1px 5px rgba(0,0,0,0.7);
   width: 970px;
@@ -59,6 +58,8 @@ button:focus {
   padding: 30px;
   overflow: visible;
   position: relative;
+  color: rgba(0,0,0,0.87);
+  background-color: #f5f7fa;
 }
 
 .direction:before, .direction:after{
@@ -92,29 +93,86 @@ button:focus {
 .direction h1 {
   padding: 0;
   font-family: 'Lato', sans-serif;
+  text-align: center;
   font-size: 54px;
-  line-height: 80px;
   font-weight: 700;
+  margin: 10px 0;
   text-shadow: 0 4px 3px rgba(0,0,0,0.4),
   0 8px 13px rgba(0,0,0,0.1),
   0 18px 23px rgba(0,0,0,0.1);
 }
 
-.direction p {
-  padding: 20px 0;
-  font-family: 'Lato', sans-serif;
-  font-size: 30px;
-  line-height: 50px;
-  font-weight: 500;
-  text-shadow: 0 4px 3px rgba(0,0,0,0.4),
-  0 8px 13px rgba(0,0,0,0.1),
-  0 18px 23px rgba(0,0,0,0.1);
-}
-
-.direction button {
+.direction button.poi {
+  background-color: #ffffff;
+  padding: 10px;
   width: 100%;
-  background-color: transparent;
   border: none;
+}
+
+.direction button.poi .shop-logo {
+  height: 150px;
+  width: 100%;
+}
+
+.direction button.poi .shop-logo img {
+  max-height: 150px;
+}
+
+.direction button.poi p {
+  font-size: 24px;
+  line-height: 24px;
+  padding: 0;
+  margin: 10px;
+}
+
+.direction md-content {
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  position: relative;
+}
+
+.direction md-content button {
+  position: absolute;
+  right: 30px;
+  top: 10px;
+  font-size: 24px;
+  height: 50px;
+  width: 100px;
+}
+
+.direction md-content div {
+  height: 250px;
+}
+
+.direction md-content img {
+  height: 220px;
+}
+
+.direction md-content strong {
+  font-size: 28px;
+  line-height: 32px;
+  text-shadow: 0 4px 3px rgba(0,0,0,0.4),
+  0 8px 13px rgba(0,0,0,0.1),
+  0 18px 23px rgba(0,0,0,0.1);
+}
+
+.direction md-content md-divider {
+  width: 100%;
+  margin-top: 6px;
+  padding: 1px;
+}
+
+.direction md-content p {
+  font-size: 20px;
+  line-height: 28px;
+  margin: 0;
+}
+
+.direction .map {
+  height: 100%;
+  background-color: #cccccc;
+  color: #ffffff;
 }
 
 .direction .back {

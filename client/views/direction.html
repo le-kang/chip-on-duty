@@ -1,18 +1,35 @@
 <div flex layout="column" layout-align="center center">
   <div class="direction" layout="column">
-    <a ng-if="app.currentDestination" ng-click="app.goBack()" class="back">Back</a>
     <h1 ng-if="!app.currentDestination">Please select a destination</h1>
-    <div ng-if="!app.currentDestination" flex class="destinations" layout="row" layout-align="center center" layout-padding layout-margin>
-      <div flex ng-repeat="destination in app.destinations track by $index">
-        <button ng-click="app.selectDestination($index)">
-          <img ng-src="assets/images/{{ ::destination.logo }}" width="100%">
+    <div ng-if="!app.currentDestination" flex class="destinations" layout="row" layout-align="center center" layout-padding layout-margin layout-wrap>
+      <div flex="30" ng-repeat="destination in app.destinations track by $index">
+        <button class="md-whiteframe-5dp poi" ng-click="app.selectDestination($index)">
+          <div class="shop-logo" layout="row" layout-align="center center">
+            <img ng-src="assets/images/poi/{{ ::destination.logo }}">
+          </div>
+          <p>{{ ::destination.name }}</p>
         </button>
-
       </div>
     </div>
-    <div  ng-if="app.currentDestination" layout="row" layout-align="center center">
-      <img ng-src="assets/images/{{ ::app.currentDestination.logo }}" height="120">
+    <md-content ng-if="app.currentDestination" class="md-whiteframe-5dp">
+      <md-button ng-click="app.goBack()" class="md-raised md-warn">Back</md-button>
+      <div layout="row" layout-align="center center">
+        <div flex="30" layout="column" layout-align="center center">
+          <img ng-src="assets/images/poi/{{ ::app.currentDestination.logo }}">
+        </div>
+        <div flex="70" layout="column" layout-padding layout-align="center start">
+          <strong class="md-headline">{{ ::app.currentDestination.name }}</strong>
+          <md-divider></md-divider>
+          <div flex>
+            <p ng-if="app.currentDestination" typewriter value="{{ ::app.currentDestination.description }}" speed="70"></p>
+          </div>
+        </div>
+      </div>
+    </md-content>
+    <div ng-if="app.currentDestination" flex>
+      <div class="map" layout="row" layout-align="center center">
+        <h2>Map is here</h2>
+      </div>
     </div>
-    <p ng-if="app.currentDestination" typewriter value="{{ ::app.currentDestination.description }}" speed="70"></p>
   </div>
 </div>
