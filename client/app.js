@@ -279,7 +279,7 @@
       vm.activationCode = '';
       vm.activity = null;
       vm.state = null;
-      ros.sendSpeech(',That completes the product sample survey. I’m collating results and sending a link to the shop owner. You can see the results on the screen.');
+      ros.sendSpeech(',That completes the product sample survey. I\'m collating results and sending a link to the shop owner. You can see the results on the screen.');
       ros.unsubscribe('activity_status');
     }
 
@@ -294,7 +294,7 @@
     }
   }
 
-  function NavigationController(ros) {
+  function NavigationController(ros, $timeout) {
     var vm = this;
     vm.currentDestination = null;
     vm.destinations = [
@@ -342,7 +342,7 @@
         name: 'JB Hi-Fi',
         logo: 'jb-hi-fi.png',
         description: 'JB Hi-Fi is located on the floor above us. Head up the travelators near Customer Care, you will see the shopfront straight ahead. Do you know someone who likes their music loud? They have a huge range of Bluetooth speakers for Christmas. Or maybe you want to give them some headphones?',
-        speech: 'JB Hi-Fi is located on the floor above us. Head up the travelators near Customer Care, you will see the shopfront straight ahead. Do you know someone who likes their music loud? They have a huge range of Bluetooth speakers for Christmas. Or maybe you want to give them some headphones?',
+        speech: 'JB Hi-Fie is located on the floor above us. Head up the travelators near Customer Care, you will see the shopfront straight ahead. Do you know someone who likes their music loud? They have a huge range of Bluetooth speakers for Christmas. Or maybe you want to give them some headphones?',
         motionDelay: 0,
         motion: 'point_to_top_left'
       }
