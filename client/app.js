@@ -168,6 +168,7 @@
       $http
         .post('/start-activity', { code: vm.activationCode.toLowerCase() })
         .then(function(response) {
+          ros.sendSpeech(',I have downloaded product and survey information.');
           vm.activity = response.data.activity;
           vm.activating = false;
           setState('demo');
@@ -318,7 +319,7 @@
         name: 'Sportsgirl',
         logo: 'sportsgirl.png',
         description: 'Sportsgirl is located on the level above. Head up the travelator and walk to your right. They are in between Napoleon Perdis and Bardot. Sportsgirl is a brand new retailer at Merrylands. This is their first day of trade! Pay them a visit and show them some love.',
-        speech: 'Sports girl is located on the level above. Head up the travelator and walk to your right. They are in between Napoleon Perdis and Bardot. Sportsgirl is a brand new retailer at Merrylands. This is their first day of trade! Pay them a visit, and show them some love.',
+        speech: 'Sports girl is located on the level above. Head up the travelator and walk to your right. They are in between Napoleon Perdis and Bardot. Sports girl is a brand new retailer at Merry lands. This is their first day of trade! Pay them a visit, and show them some love.',
         motionDelay: 0,
         motion: 'point_to_top_right'
       },
@@ -326,7 +327,7 @@
         name: 'Priceline',
         logo: 'priceline.png',
         description: 'It’s a bit of a walk but it’s worth it. Priceline is on this level, keep walking straight down this corridor and it’s on the left. If you get to Kmart you have gone too far. They have so many Christmas hampers, already packed – all you need to do is wrap them. Up to 60% off this Wednesday and Thursday on Fragrance.',
-        speech: 'It’s a bit of a walk but it’s worth it. Priceline is on this level, keep walking straight down this corridor, and it’s on the left. If you get to Kmart, you have gone too far. They have so many Christmas hampers, already packed, all you need to do is wrap them. Up to 60% off this Wednesday and Thursday on Fragrance.',
+        speech: 'It’s a bit of a walk but it’s worth it. Price line is on this level, keep walking straight down this corridor, and it’s on the left. If you get to K mart, you have gone too far. They have so many Christmas hampers, already packed, all you need to do is wrap them. Up to 60% off this Wednesday and Thursday on Fragrance.',
         motionDelay: 0,
         motion: 'point_to_right'
       },
