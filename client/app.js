@@ -322,7 +322,7 @@
         logo: 'sportsgirl.png',
         map: 'sportsgirl.png',
         description: 'Sportsgirl is located on the level above. Head up the travelator and walk to your left. They are in between Napoleon Perdis and Bardot. Sportsgirl is a brand new retailer at Merrylands. This is their first day of trade! Pay them a visit and show them some love.',
-        speech: 'Sports girl is located on the level above. Head up the travelator and walk to your left. They are in between Napoleon Perdis and Bardot. Sports girl is a brand new retailer at Merry lands. This is their first day of trade! Pay them a visit, and show them some love.',
+        speech: 'Sports girl is located on the level above. Head up the travelator and walk to your left. They are in between Napoleon Perdeis and Bardou. Sports girl is a brand new retailer at Merry lands. This is their first day of trade! Pay them a visit, and show them some love.',
         motionDelay: 0,
         motion: 'point_to_top_left'
       },
@@ -339,8 +339,8 @@
         name: 'Food Court',
         logo: 'food_court.png',
         map: 'food_court.png',
-        description: 'Our food court is located on the level above. Take the travelators near Customer Care, turn right and walk straight. The food court will be on your right – you can’t miss it. Treat yourself! Head to Krema Bar for a coffee and muffin deal, you deserve it.',
-        speech: 'Our food court is located on the level above. Take the travelators near Customer Care, turn right and walk straight. The food court will be on your right,you can’t miss it. Treat yourself! Head to Krema Bar for a coffee and muffin deal, you deserve it.',
+        description: 'Our food court is located on the level above. Take the travelators near Customer Care, turn right and walk straight. The food court will be on your left – you can’t miss it. Treat yourself! Head to Krema Bar for a coffee and muffin deal, you deserve it.',
+        speech: 'Our food court is located on the level above. Take the travelators near Customer Care, turn right and walk straight. The food court will be on your left,you can’t miss it. Treat yourself! Head to Krema Bar for a coffee and muffin deal, you deserve it.',
         motionDelay: 0,
         motion: 'point_to_top_right'
       },
