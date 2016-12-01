@@ -302,38 +302,43 @@
       {
         name: 'Customer Care',
         logo: 'customer_care.png',
-        description: 'Our customer care desk is located to the right, next to the travelator. You can do loads of things at our customer care desk!  Grab a gift card for that special someone or pick up a copy of our Christmas Gift Guide for some inspiration. Do you need a hand around the centre? You can hire mobility equipment there as well.',
-        speech: 'Our customer care desk is located to the right, next to the travelator. You can do loads of things at our customer care desk!  Grab a gift card for that special someone, or pick up a copy of our Christmas Gift Guide for some inspiration. Do you need a hand around the centre? You can hire mobility equipment there as well.',
+        map: 'customer_care.png',
+        description: 'Our customer care desk is located behind me, next to the travelator. You can do loads of things at our customer care desk!  Grab a gift card for that special someone or pick up a copy of our Christmas Gift Guide for some inspiration. Do you need a hand around the centre? You can hire mobility equipment there as well.',
+        speech: 'Our customer care desk is located behind me, next to the travelator. You can do loads of things at our customer care desk!  Grab a gift card for that special someone, or pick up a copy of our Christmas Gift Guide for some inspiration. Do you need a hand around the centre? You can hire mobility equipment there as well.',
         motionDelay: 0,
         motion: 'point_to_right'
       },
       {
         name: 'Big W',
         logo: 'bigw.png',
-        description: 'Big W is located on the level above. Take the travelator next to our customer care desk, walk towards The Coffee Club and Big W is there on your left. Have you had a photo with Santa? He’s located outside Big W, why not do it while you are there. Have you put up your Christmas Tree? Big W has a huge range of Christmas trees, decorations and lights.',
-        speech: 'Big W is located on the level above. Take the travelator next to our customer care desk, walk towards The Coffee Club, and Big W is there on your left. Have you had a photo with Santa? He’s located outside Big W, why not do it while you are there. Have you put up your Christmas Tree? Big W has a huge range of Christmas trees, decorations and lights.',
+        map: 'bigw.png',
+        description: 'Big W is located on the level above. Take the travelator next to our customer care desk, then turn left and walk towards to the end, Big W is there next to The Coffee Club. Have you had a photo with Santa? He’s located outside Big W, why not do it while you are there. Have you put up your Christmas Tree? Big W has a huge range of Christmas trees, decorations and lights.',
+        speech: 'Big W is located on the level above. Take the travelator next to our customer care desk, then turn left and walk towards to the end, Big W is there next to The Coffee Club. Have you had a photo with Santa? He’s located outside Big W, why not do it while you are there. Have you put up your Christmas Tree? Big W has a huge range of Christmas trees, decorations and lights.',
         motionDelay: 0,
         motion: 'point_to_top_left'
       },
       {
         name: 'Sportsgirl',
         logo: 'sportsgirl.png',
-        description: 'Sportsgirl is located on the level above. Head up the travelator and walk to your right. They are in between Napoleon Perdis and Bardot. Sportsgirl is a brand new retailer at Merrylands. This is their first day of trade! Pay them a visit and show them some love.',
-        speech: 'Sports girl is located on the level above. Head up the travelator and walk to your right. They are in between Napoleon Perdis and Bardot. Sports girl is a brand new retailer at Merry lands. This is their first day of trade! Pay them a visit, and show them some love.',
+        map: 'sportsgirl.png',
+        description: 'Sportsgirl is located on the level above. Head up the travelator and walk to your left. They are in between Napoleon Perdis and Bardot. Sportsgirl is a brand new retailer at Merrylands. This is their first day of trade! Pay them a visit and show them some love.',
+        speech: 'Sports girl is located on the level above. Head up the travelator and walk to your left. They are in between Napoleon Perdis and Bardot. Sports girl is a brand new retailer at Merry lands. This is their first day of trade! Pay them a visit, and show them some love.',
         motionDelay: 0,
-        motion: 'point_to_top_right'
+        motion: 'point_to_top_left'
       },
       {
         name: 'Priceline',
         logo: 'priceline.png',
+        map: 'priceline.png',
         description: 'It’s a bit of a walk but it’s worth it. Priceline is on this level, keep walking straight down this corridor and it’s on the left. If you get to Kmart you have gone too far. They have so many Christmas hampers, already packed – all you need to do is wrap them. Up to 60% off this Wednesday and Thursday on Fragrance.',
         speech: 'It’s a bit of a walk but it’s worth it. Price line is on this level, keep walking straight down this corridor, and it’s on the left. If you get to K mart, you have gone too far. They have so many Christmas hampers, already packed, all you need to do is wrap them. Up to 60% off this Wednesday and Thursday on Fragrance.',
-        motionDelay: 0,
+        motionDelay: 2,
         motion: 'point_to_right'
       },
       {
         name: 'Food Court',
         logo: 'food_court.png',
+        map: 'food_court.png',
         description: 'Our food court is located on the level above. Take the travelators near Customer Care, turn right and walk straight. The food court will be on your right – you can’t miss it. Treat yourself! Head to Krema Bar for a coffee and muffin deal, you deserve it.',
         speech: 'Our food court is located on the level above. Take the travelators near Customer Care, turn right and walk straight. The food court will be on your right,you can’t miss it. Treat yourself! Head to Krema Bar for a coffee and muffin deal, you deserve it.',
         motionDelay: 0,
@@ -342,10 +347,11 @@
       {
         name: 'JB Hi-Fi',
         logo: 'jb-hi-fi.png',
+        map: 'jb-hi-fi.png',
         description: 'JB Hi-Fi is located on the floor above us. Head up the travelators near Customer Care, you will see the shopfront straight ahead. Do you know someone who likes their music loud? They have a huge range of Bluetooth speakers for Christmas. Or maybe you want to give them some headphones?',
         speech: 'JB Hi-Fie is located on the floor above us. Head up the travelators near Customer Care, you will see the shopfront straight ahead. Do you know someone who likes their music loud? They have a huge range of Bluetooth speakers for Christmas. Or maybe you want to give them some headphones?',
         motionDelay: 0,
-        motion: 'point_to_top_left'
+        motion: 'point_to_top_right'
       }
     ];
     vm.selectDestination = selectDestination;

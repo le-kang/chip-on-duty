@@ -49,7 +49,12 @@ button:focus {
   background-color: #ffffff;
 }
 
+.stockland-background {
+  background-color: #426DA9;
+}
+
 .direction {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   border: 10px solid #ffffff;
   box-shadow: 1px 1px 5px rgba(0,0,0,0.7);
   width: 970px;
@@ -62,44 +67,44 @@ button:focus {
   background-color: #f5f7fa;
 }
 
-.direction:before, .direction:after{
-  z-index: -1;
-  position: absolute;
-  content: "";
-  bottom: 20px;
-  left: 10px;
-  width: 50%;
-  top: 80%;
-  max-width: 350px;
-  background: #777;
-  box-shadow: 0 35px 20px #777;
-  -webkit-transform: rotate(-8deg);
-  -moz-transform: rotate(-8deg);
-  -o-transform: rotate(-8deg);
-  -ms-transform: rotate(-8deg);
-  transform: rotate(-8deg);
-}
+/*.direction:before, .direction:after{*/
+  /*z-index: -1;*/
+  /*position: absolute;*/
+  /*content: "";*/
+  /*bottom: 20px;*/
+  /*left: 10px;*/
+  /*width: 50%;*/
+  /*top: 80%;*/
+  /*max-width: 350px;*/
+  /*background: #777;*/
+  /*box-shadow: 0 35px 20px #777;*/
+  /*-webkit-transform: rotate(-8deg);*/
+  /*-moz-transform: rotate(-8deg);*/
+  /*-o-transform: rotate(-8deg);*/
+  /*-ms-transform: rotate(-8deg);*/
+  /*transform: rotate(-8deg);*/
+/*}*/
 
-.direction:after{
-  -webkit-transform: rotate(8deg);
-  -moz-transform: rotate(8deg);
-  -o-transform: rotate(8deg);
-  -ms-transform: rotate(8deg);
-  transform: rotate(8deg);
-  right: 10px;
-  left: auto;
-}
+/*.direction:after{*/
+  /*-webkit-transform: rotate(8deg);*/
+  /*-moz-transform: rotate(8deg);*/
+  /*-o-transform: rotate(8deg);*/
+  /*-ms-transform: rotate(8deg);*/
+  /*transform: rotate(8deg);*/
+  /*right: 10px;*/
+  /*left: auto;*/
+/*}*/
 
 .direction h1 {
   padding: 0;
-  font-family: 'Lato', sans-serif;
+  /*font-family: 'Lato', sans-serif;*/
   text-align: center;
   font-size: 54px;
-  font-weight: 700;
+  font-weight: 900;
   margin: 10px 0;
-  text-shadow: 0 4px 3px rgba(0,0,0,0.4),
-  0 8px 13px rgba(0,0,0,0.1),
-  0 18px 23px rgba(0,0,0,0.1);
+  /*text-shadow: 0 4px 3px rgba(0,0,0,0.4),*/
+  /*0 8px 13px rgba(0,0,0,0.1),*/
+  /*0 18px 23px rgba(0,0,0,0.1);*/
 }
 
 .direction button.poi {
@@ -121,6 +126,7 @@ button:focus {
 .direction button.poi p {
   font-size: 24px;
   line-height: 24px;
+  font-weight: 900;
   padding: 0;
   margin: 10px;
 }
@@ -152,9 +158,10 @@ button:focus {
 .direction md-content strong {
   font-size: 28px;
   line-height: 32px;
-  text-shadow: 0 4px 3px rgba(0,0,0,0.4),
-  0 8px 13px rgba(0,0,0,0.1),
-  0 18px 23px rgba(0,0,0,0.1);
+  font-weight: 900;
+  /*text-shadow: 0 4px 3px rgba(0,0,0,0.4),*/
+  /*0 8px 13px rgba(0,0,0,0.1),*/
+  /*0 18px 23px rgba(0,0,0,0.1);*/
 }
 
 .direction md-content md-divider {
@@ -171,8 +178,10 @@ button:focus {
 
 .direction .map {
   height: 100%;
-  background-color: #cccccc;
-  color: #ffffff;
+}
+
+.direction img {
+  max-width: 100%;
 }
 
 .direction .back {
@@ -211,7 +220,7 @@ button:focus {
 }
 
 .activation h1 {
-  font-family: 'Kaushan Script', cursive;
+  /*font-family: 'Kaushan Script', cursive;*/
   width: 100%;
   padding: 20px 50px;
   background-color: #FF7052;
@@ -316,7 +325,7 @@ button:focus {
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
-  font-family: helvetica, arial, sans-serif;
+  /*font-family: helvetica, arial, sans-serif;*/
   text-transform: uppercase;
   font-weight: 900;
   color: #FF7052;
@@ -412,7 +421,7 @@ button:focus {
   text-decoration: none;
   padding: 0 9px 4px;
   text-align: center;
-  font-family: 'Open Sans', sans-serif;
+  /*font-family: 'Open Sans', sans-serif;*/
   text-transform: uppercase;
   letter-spacing: 2px;
   height: auto;
@@ -530,7 +539,7 @@ button:focus {
 
 .activity .conversation h1, .activity .conversation p{
   padding: 0;
-  font-family: 'Lato', sans-serif;
+  /*font-family: 'Lato', sans-serif;*/
   font-size: 54px;
   line-height: 80px;
   font-weight: 700;

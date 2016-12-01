@@ -1,4 +1,4 @@
-<div flex layout="column" layout-align="center center">
+<div flex layout="column" layout-align="center center" class="stockland-background">
   <div class="direction" layout="column">
     <h1 ng-if="!app.currentDestination">Please select a destination</h1>
     <div ng-if="!app.currentDestination" flex class="destinations" layout="row" layout-align="center center" layout-padding layout-margin layout-wrap>
@@ -28,7 +28,8 @@
     </md-content>
     <div ng-if="app.currentDestination" flex>
       <div class="map" layout="row" layout-align="center center">
-        <h2>Map is here</h2>
+        <h2 ng-if="!app.currentDestination.map">Map is here</h2>
+        <img ng-if="app.currentDestination.map" ng-src="assets/images/map/{{ ::app.currentDestination.map }}">
       </div>
     </div>
   </div>
