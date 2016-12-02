@@ -321,8 +321,8 @@
         name: 'Sportsgirl',
         logo: 'sportsgirl.png',
         map: 'sportsgirl.png',
-        description: 'Sportsgirl is located on the level above. Head up the travelator and walk to your left. They are in between Napoleon Perdis and Bardot. Sportsgirl is a brand new retailer at Merrylands. This is their first day of trade! Pay them a visit and show them some love.',
-        speech: 'Sports girl is located on the level above. Head up the travelator and walk to your left. They are in between Napoleon Perdeis and Bardou. Sports girl is a brand new retailer at Merry lands. This is their first day of trade! Pay them a visit, and show them some love.',
+        description: 'Sportsgirl is located on the level above. Head up the travelator and walk to your left. They are in between Napoleon Perdis and Bardot. Sportsgirl is a brand new retailer at Merrylands. This is their first full week of trade! Pay them a visit and show them some love.',
+        speech: 'Sports girl is located on the level above. Head up the travelator and walk to your left. They are in between Napoleon Perdeis and Bardou. Sports girl is a brand new retailer at Merry lands. This is their first full week of trade! Pay them a visit, and show them some love.',
         motionDelay: 0,
         motion: 'point_to_top_left'
       },
