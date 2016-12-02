@@ -312,8 +312,8 @@
         name: 'Big W',
         logo: 'bigw.png',
         map: 'bigw.png',
-        description: 'Big W is located on the level above. Take the travelator next to our customer care desk, then turn left and walk towards to the end, Big W is there next to The Coffee Club. Have you had a photo with Santa? He’s located outside Big W, why not do it while you are there. Have you put up your Christmas Tree? Big W has a huge range of Christmas trees, decorations and lights.',
-        speech: 'Big W is located on the level above. Take the travelator next to our customer care desk, then turn left and walk towards to the end, Big W is there next to The Coffee Club. Have you had a photo with Santa? He’s located outside Big W, why not do it while you are there. Have you put up your Christmas Tree? Big W has a huge range of Christmas trees, decorations and lights.',
+        description: 'Big W is located on the level above. Take the travelator next to our customer care desk, then turn left and walk towards the end, Big W is there next to The Coffee Club. Have you had a photo with Santa? He’s located outside Big W, why not do it while you are there. Have you put up your Christmas Tree? Big W has a huge range of Christmas trees, decorations and lights.',
+        speech: 'Big W is located on the level above. Take the travelator next to our customer care desk, then turn left and walk towards the end, Big W is there next to The Coffee Club. Have you had a photo with Santa? He’s located outside Big W, why not do it while you are there. Have you put up your Christmas Tree? Big W has a huge range of Christmas trees, decorations and lights.',
         motionDelay: 0,
         motion: 'point_to_top_left'
       },
@@ -332,7 +332,7 @@
         map: 'priceline.png',
         description: 'It’s a bit of a walk but it’s worth it. Priceline is on this level, keep walking straight down this corridor and it’s on the left. If you get to Kmart you have gone too far. They have so many Christmas hampers, already packed – all you need to do is wrap them. Up to 60% off this Wednesday and Thursday on Fragrance.',
         speech: 'It’s a bit of a walk but it’s worth it. Price line is on this level, keep walking straight down this corridor, and it’s on the left. If you get to K mart, you have gone too far. They have so many Christmas hampers, already packed, all you need to do is wrap them. Up to 60% off this Wednesday and Thursday on Fragrance.',
-        motionDelay: 2,
+        motionDelay: 2000,
         motion: 'point_to_right'
       },
       {
