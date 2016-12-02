@@ -313,7 +313,7 @@
         logo: 'bigw.png',
         map: 'bigw.png',
         description: 'Big W is located on the level above. Take the travelator next to our customer care desk, then turn left and walk to the end, Big W is next to The Coffee Club. Have you had a photo with Santa? He’s located outside Big W, why not do it while you are there. Have you put up your Christmas Tree? Big W has a huge range of Christmas trees, decorations and lights.',
-        speech: 'Big W is located on the level above. Take the travelator next to our customer care desk, then turn left and walk to the end, Big W is next to The Coffee Club. Have you had a photo with Santa? He’s located outside Big W. why not do it while you are there. Have you put up your Christmas Tree? Big W has a huge range of Christmas trees, decorations and lights.',
+        speech: 'Big W is located on the level above. Take the travelator next to our customer care desk, then turn left and walk to the end, Big W is next to The Coffee Club. Have you had a photo with Santa? He’s located outside Big W. Why not do it while you are there. Have you put up your Christmas Tree? Big W has a huge range of Christmas trees, decorations and lights.',
         motionDelay: 0,
         motion: 'point_to_top_left'
       },
