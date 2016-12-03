@@ -462,6 +462,7 @@ button:focus {
   border-right: 1px solid #222;
   position: relative;
   height: auto;
+  min-height: 180px;
   max-height: 250px;
   padding: 10px;
 }

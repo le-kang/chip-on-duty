@@ -81,6 +81,7 @@
         delete listeners[topic];
       },
       sendSpeech: function(speech) {
+        if (!ros || listeners[topic]) return;
         var message = new ROSLIB.Message({
           'node_id': 'chip_on_duty_speech',
           'status_text': speech
@@ -89,6 +90,7 @@
         publisher.publish(message);
       },
       sendMotion: function(motion) {
+        if (!ros || listeners[topic]) return;
         var message = new ROSLIB.Message({
           'node_id': 'chip_on_duty_motion',
           'status_text': motion
